@@ -1,0 +1,10 @@
+{
+  "simulation": "computerdatabase.BarmicroserviceSimulation",
+  "simulationId": "barmicroservicesimulation",
+  "start": 1579896465227,
+  "description": "",
+  "scenarios": ["mono-delay?delayMs=5"],
+  "assertions": [
+
+  ]
+}

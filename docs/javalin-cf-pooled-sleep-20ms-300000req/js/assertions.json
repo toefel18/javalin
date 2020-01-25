@@ -1,0 +1,10 @@
+{
+  "simulation": "computerdatabase.BasicSimulation",
+  "simulationId": "basicsimulation",
+  "start": 1579986978261,
+  "description": "",
+  "scenarios": ["future?delayMs=20"],
+  "assertions": [
+
+  ]
+}

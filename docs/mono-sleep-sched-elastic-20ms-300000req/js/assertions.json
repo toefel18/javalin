@@ -1,0 +1,10 @@
+{
+  "simulation": "computerdatabase.BasicSimulation",
+  "simulationId": "basicsimulation",
+  "start": 1579986521303,
+  "description": "",
+  "scenarios": ["mono-sleep-sched?delayMs=20"],
+  "assertions": [
+
+  ]
+}

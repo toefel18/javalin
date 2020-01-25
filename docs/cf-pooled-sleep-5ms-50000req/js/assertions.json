@@ -1,0 +1,10 @@
+{
+  "simulation": "computerdatabase.BarmicroserviceSimulation",
+  "simulationId": "barmicroservicesimulation",
+  "start": 1579897058441,
+  "description": "",
+  "scenarios": ["cf-pooled-sleep?delayMs=5"],
+  "assertions": [
+
+  ]
+}

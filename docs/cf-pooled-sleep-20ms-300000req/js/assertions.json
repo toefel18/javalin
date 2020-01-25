@@ -1,0 +1,10 @@
+{
+  "simulation": "computerdatabase.BasicSimulation",
+  "simulationId": "basicsimulation",
+  "start": 1579986384535,
+  "description": "",
+  "scenarios": ["cf-pooled-sleep?delayMs=20"],
+  "assertions": [
+
+  ]
+}
