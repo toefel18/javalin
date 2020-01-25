@@ -11,9 +11,4 @@
 		<appender-ref ref="STDOUT"/>
 	</root>
 
-	<!-- Turn on debug logging for the exposed logger to see executed sql statements-->
-	<logger name="Exposed" level="DEBUG" additivity="false">
-		<appender-ref ref="STDOUT"/>
-    </logger>
-
 </configuration>
