@@ -1,32 +1,63 @@
-<h1>Hello Javalin Page</h1>
+<h1>Performance test results of blocking and non-blocking APIs</h1>
 
-<a href="cf-pooled-sleep-20ms-250000req">cf-pooled-sleep-20ms-250000req</a>
-<a href="cf-pooled-sleep-20ms-250000req-warmup">cf-pooled-sleep-20ms-250000req-warmup</a>
-<a href="cf-pooled-sleep-20ms-300000req">cf-pooled-sleep-20ms-300000req</a>
-<a href="cf-pooled-sleep-20ms-50000req">cf-pooled-sleep-20ms-50000req</a>
-<a href="cf-pooled-sleep-5ms-250000req">cf-pooled-sleep-5ms-250000req</a>
-<a href="cf-pooled-sleep-5ms-50000req">cf-pooled-sleep-5ms-50000req</a>
-<a href="cf-sleep-5ms-250000req">cf-sleep-5ms-250000req</a>
-<a href="cf-sleep-5ms-50000req">cf-sleep-5ms-50000req</a>
-<a href="index.html">index.html</a>
-<a href="instant-50000req">instant-50000req</a>
-<a href="javalin-cf-pooled-sleep-20ms-250000req">javalin-cf-pooled-sleep-20ms-250000req</a>
-<a href="javalin-cf-pooled-sleep-20ms-300000req">javalin-cf-pooled-sleep-20ms-300000req</a>
-<a href="javalin-cf-pooled-sleep-20ms-50000req">javalin-cf-pooled-sleep-20ms-50000req</a>
-<a href="javalin-cf-pooled-sleep-5ms-250000req">javalin-cf-pooled-sleep-5ms-250000req</a>
-<a href="javalin-cf-pooled-sleep-5ms-50000req">javalin-cf-pooled-sleep-5ms-50000req</a>
-<a href="javalin-normal-20ms-250000req">javalin-normal-20ms-250000req</a>
-<a href="javalin-normal-20ms-300000req">javalin-normal-20ms-300000req</a>
-<a href="javalin-normal-20ms-300000req-warmup">javalin-normal-20ms-300000req-warmup</a>
-<a href="javalin-normal-20ms-50000req">javalin-normal-20ms-50000req</a>
-<a href="javalin-normal-5ms-250000req">javalin-normal-5ms-250000req</a>
-<a href="javalin-normal-5ms-50000req">javalin-normal-5ms-50000req</a>
-<a href="mono-delay-5ms-250000req">mono-delay-5ms-250000req</a>
-<a href="mono-delay-5ms-50000req">mono-delay-5ms-50000req</a>
-<a href="mono-sleep-5ms-250000req">mono-sleep-5ms-250000req</a>
-<a href="mono-sleep-5ms-50000req">mono-sleep-5ms-50000req</a>
-<a href="mono-sleep-sched-5ms-250000req">mono-sleep-sched-5ms-250000req</a>
-<a href="mono-sleep-sched-elastic-20ms-250000req">mono-sleep-sched-elastic-20ms-250000req</a>
-<a href="mono-sleep-sched-elastic-20ms-250000req-warmup">mono-sleep-sched-elastic-20ms-250000req-warmup</a>
-<a href="mono-sleep-sched-elastic-20ms-300000req">mono-sleep-sched-elastic-20ms-300000req</a>
-<a href="raw-sleep-5ms-50000req">raw-sleep-5ms-50000req</a>
+<p>
+    This repository contains a two very simple <a
+        href="https://github.com/toefel18/javalin/blob/master/src/main/kotlin/nl/toefel/javalin/performance/Main.kt#L39">APIs
+    written using Javalin</a>.
+    All APIs receive a query param with an amount of milliseconds of blocking work it should simulate. Blocking work is
+    simulated using a Thread.sleep during the call using:
+<ul>
+    <li>Thread.sleep in the handler (see javalin-normal)</li>
+    <li>Thread.sleep in a CompletableFuture on Executor.cachedThreadPool() (see javalin-cf-pooled-sleep)</li>
+</ul>
+A gatling load test is run against the APIs with different parameters to see how the API performs. The links to the
+HTML reports for each test-case are listed below.
+</p>
+
+<p>
+    The performance test was also run against a simple SpringBoot 2.2.4 service with spring-web-reactive using a
+    RestController that executes the Thread.sleep using:
+<ul>
+    <li>Mono using delay (see mono-delay)</li>
+    <li>Mono using fromCallable (see mono-sleep)</li>
+    <li>Mono using fromCallable using Schedulers.elastic() (see mono-sleep-sched)</li>
+    <li>CompletableFuture without a backing threadpool see (cf-sleep)</li>
+    <li>CompletableFuture with a dedicated Executor.cachedThreadPool() (see cf-pooled-sleep)</li>
+    <li>Naked return type with Thread.sleep in the body (see raw-sleep)</li>
+</ul>
+
+See the code here: <a target="_blank" href="https://gist.github.com/toefel18/c5767d4d2db6a3af7ef35069dc53df52">APIs written using SpringBoot</a>
+
+</p>
+
+<ul>
+    <li><a href="cf-pooled-sleep-20ms-250000req">cf-pooled-sleep-20ms-250000req</a></li>
+    <li><a href="cf-pooled-sleep-20ms-250000req-warmup">cf-pooled-sleep-20ms-250000req-warmup</a></li>
+    <li><a href="cf-pooled-sleep-20ms-300000req">cf-pooled-sleep-20ms-300000req</a></li>
+    <li><a href="cf-pooled-sleep-20ms-50000req">cf-pooled-sleep-20ms-50000req</a></li>
+    <li><a href="cf-pooled-sleep-5ms-250000req">cf-pooled-sleep-5ms-250000req</a></li>
+    <li><a href="cf-pooled-sleep-5ms-50000req">cf-pooled-sleep-5ms-50000req</a></li>
+    <li><a href="cf-sleep-5ms-250000req">cf-sleep-5ms-250000req</a></li>
+    <li><a href="cf-sleep-5ms-50000req">cf-sleep-5ms-50000req</a></li>
+    <li><a href="instant-50000req">instant-50000req</a></li>
+    <li><a href="javalin-cf-pooled-sleep-20ms-250000req">javalin-cf-pooled-sleep-20ms-250000req</a></li>
+    <li><a href="javalin-cf-pooled-sleep-20ms-300000req">javalin-cf-pooled-sleep-20ms-300000req</a></li>
+    <li><a href="javalin-cf-pooled-sleep-20ms-50000req">javalin-cf-pooled-sleep-20ms-50000req</a></li>
+    <li><a href="javalin-cf-pooled-sleep-5ms-250000req">javalin-cf-pooled-sleep-5ms-250000req</a></li>
+    <li><a href="javalin-cf-pooled-sleep-5ms-50000req">javalin-cf-pooled-sleep-5ms-50000req</a></li>
+    <li><a href="javalin-normal-20ms-250000req">javalin-normal-20ms-250000req</a></li>
+    <li><a href="javalin-normal-20ms-300000req">javalin-normal-20ms-300000req</a></li>
+    <li><a href="javalin-normal-20ms-300000req-warmup">javalin-normal-20ms-300000req-warmup</a></li>
+    <li><a href="javalin-normal-20ms-50000req">javalin-normal-20ms-50000req</a></li>
+    <li><a href="javalin-normal-5ms-250000req">javalin-normal-5ms-250000req</a></li>
+    <li><a href="javalin-normal-5ms-50000req">javalin-normal-5ms-50000req</a></li>
+    <li><a href="mono-delay-5ms-250000req">mono-delay-5ms-250000req</a></li>
+    <li><a href="mono-delay-5ms-50000req">mono-delay-5ms-50000req</a></li>
+    <li><a href="mono-sleep-5ms-250000req">mono-sleep-5ms-250000req</a></li>
+    <li><a href="mono-sleep-5ms-50000req">mono-sleep-5ms-50000req</a></li>
+    <li><a href="mono-sleep-sched-5ms-250000req">mono-sleep-sched-5ms-250000req</a></li>
+    <li><a href="mono-sleep-sched-elastic-20ms-250000req">mono-sleep-sched-elastic-20ms-250000req</a></li>
+    <li><a href="mono-sleep-sched-elastic-20ms-250000req-warmup">mono-sleep-sched-elastic-20ms-250000req-warmup</a></li>
+    <li><a href="mono-sleep-sched-elastic-20ms-300000req">mono-sleep-sched-elastic-20ms-300000req</a></li>
+    <li><a href="raw-sleep-5ms-50000req">raw-sleep-5ms-50000req</a></li>
+</ul>
